@@ -20,6 +20,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState<Array<Game>>([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     let timer: number;
@@ -65,6 +66,14 @@ const App = () => {
     };
   }, []);
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredGames = games.filter((game) =>
+    game.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading) {
     return (
       <div className='flex justify-center items-center h-screen w-full'>
@@ -74,16 +83,27 @@ const App = () => {
   }
 
   return (
-    <div className='max-w-7xl mx-auto w-full h-full'>
+    <div className='max-w-7xl mx-auto w-full h-full p-8'>
+      <div className='flex justify-center items-center flex-col'>
+        <div>
+          {errorMessage && <p>{errorMessage}</p>}
+        </div>
+        <div>
+          <input
+            type='text'
+            placeholder='Pesquisar por título'
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </div>
+      </div>
       <div className='grid lg:grid-cols-2 grid-cols-1 lg:p-8 p-8 xl:grid-cols-3 gap-8'>
-        {errorMessage && <p>{errorMessage}</p>}
-        {games.length > 0 &&
-          games.map((game) => (
-            <div key={game.id}>
-              <h2>{game.title}</h2>
-              <img src={game.thumbnail} alt={game.title} className='w-62' />
-            </div>
-          ))}
+        {filteredGames.map((game) => (
+          <div key={game.id}>
+            <h2>{game.title}</h2>
+            <img src={game.thumbnail} alt={game.title} className='w-62' />
+          </div>
+        ))}
       </div>
     </div>
   );
