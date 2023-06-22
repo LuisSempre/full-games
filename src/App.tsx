@@ -2,16 +2,16 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 interface Game {
-  id:                     number;
-  title:                  string;
-  thumbnail:              string;
-  short_description:      string;
-  game_url:               string;
-  genre:                  string;
-  platform:               string;
-  publisher:              string;
-  developer:              string;
-  release_date:           Date;
+  id: number;
+  title: string;
+  thumbnail: string;
+  short_description: string;
+  game_url: string;
+  genre: string;
+  platform: string;
+  publisher: string;
+  developer: string;
+  release_date: Date;
   freetogame_profile_url: string;
 }
 
@@ -20,12 +20,15 @@ const App = () => {
 
   useEffect(() => {
     const fetchGameTitles = async () => {
-      try {
-        const response = await axios.get<Game[]>('https://games-test-api-81e9fb0d564a.herokuapp.com/api/data', {
-          headers: {
-            'dev-email-address': 'luisantoniolucass@gmail.com',
-          },
-        });
+    try {
+        const response = await axios.get<Game[]>(
+          'https://games-test-api-81e9fb0d564a.herokuapp.com/api/data',
+          {
+            headers: {
+              'dev-email-address': 'luisantoniolucass@gmail.com',
+            },
+          }
+        );
         const titles = response.data.map((game) => game.title);
         setGameTitles(titles);
       } catch (error) {
@@ -49,4 +52,3 @@ const App = () => {
 };
 
 export default App;
-
