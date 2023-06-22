@@ -93,13 +93,13 @@ const App = () => {
 
   return (
     <div className='max-w-7xl mx-auto w-full h-full p-8'>
-      <div className='flex justify-center items-center flex-col w-full h-full'>
+      <div className='flex justify-center items-center flex-col w-full h-full space-y-4'>
         <div>
           {errorMessage && <p>{errorMessage}</p>}
         </div>
         <div>
           <input
-          className='border rounded-lg'
+            className='border rounded-lg p-2'
             type='text'
             placeholder='Pesquisar por título'
             value={searchTerm}
@@ -107,7 +107,7 @@ const App = () => {
           />
         </div>
         <div>
-          <select value={selectedGenre} onChange={handleGenreChange}className='border rounded-lg'>
+          <select value={selectedGenre} onChange={handleGenreChange} className='border rounded-lg p-2'>
             <option value=''>Todos os gêneros</option>
             {genres.map((genre) => (
               <option value={genre} key={genre}>
@@ -120,8 +120,8 @@ const App = () => {
       <div className='grid lg:grid-cols-2 grid-cols-1 lg:p-8 p-8 xl:grid-cols-3 gap-8'>
         {filteredGames.map((game) => (
           <div key={game.id}>
-            <h2>{game.title}</h2>
-            <img src={game.thumbnail} alt={game.title} className='w-62' />
+            <h2 className='font-semibold text-xl'>{game.title}</h2>
+            <img src={game.thumbnail} alt={game.title} className='w-62 rounded-lg' />
           </div>
         ))}
       </div>
