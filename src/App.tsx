@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Loader from './components/Loader';
 
 interface Game {
-  id: number;
+  id: string;
   title: string;
   thumbnail: string;
   short_description: string;
@@ -18,10 +18,10 @@ interface Game {
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const [gameTitles, setGameTitles] = useState<string[]>([]);
+  const [games, setGames] = useState<Array<Game>>([]);
 
   useEffect(() => {
-    const fetchGameTitles = async () => {
+    const fetchGames = async () => {
       try {
         const response = await axios.get<Game[]>(
           'https://games-test-api-81e9fb0d564a.herokuapp.com/api/data',
@@ -31,8 +31,7 @@ const App = () => {
             },
           }
         );
-        const titles = response.data.map((game) => game.title);
-        setGameTitles(titles);
+        setGames(response.data);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -40,25 +39,25 @@ const App = () => {
       }
     };
 
-    fetchGameTitles();
+    fetchGames();
   }, []);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen w-full">
+      <div className='flex justify-center items-center h-screen w-full'>
         <Loader />
       </div>
-    );
+    )
   }
 
   return (
-    <div className="flex justify-center items-center max-w-4xl mx-auto">
-      <h1>Lista de Títulos de Jogos</h1>
-      <ul className='grid grid-cols-8 gap-8'>
-        {gameTitles.map((title, index) => (
-          <li key={index}>{title}</li>
-        ))}
-      </ul>
+    <div className='grid grid-cols-3 p-8'>
+      {games.map((game) => (
+        <div key={game.id} >
+          <h2>{game.title}</h2>
+          <img src={game.thumbnail} alt={game.title} />
+        </div>
+      ))}
     </div>
   );
 };
