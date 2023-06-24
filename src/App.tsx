@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { fetchGames } from './api';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Loader from './components/Loader';
@@ -9,7 +10,7 @@ import { Game } from './types';
 const App: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
-  const [games, setGames] = useState<Array<Game>>([]);
+  const [games, setGames] = useState<Game[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGenre, setSelectedGenre] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,43 +18,39 @@ const App: React.FC = () => {
 
   useEffect(() => {
     let timer: number;
-
-    const fetchGames = async () => {
+  
+    const fetchData = async () => {
       try {
         timer = setTimeout(() => {
           setErrorMessage('O servidor demorou para responder. Tente novamente mais tarde.');
           setLoading(false);
         }, 5000);
-
-        const response = await axios.get<Game[]>(
-          'https://games-test-api-81e9fb0d564a.herokuapp.com/api/data',
-          {
-            headers: {
-              'dev-email-address': 'luisantoniolucass@gmail.com',
-            },
-          }
-        );
-
+  
+        const games = await fetchGames('luisantoniolucass@gmail.com');
+  
         clearTimeout(timer);
-        setGames(response.data);
+        setGames(games);
         setLoading(false);
-      } catch (error: any) {
+      } catch (error) {
         clearTimeout(timer);
-
-        if (
-          error.response &&
-          [500, 502, 503, 504, 507, 508, 509].includes(error.response.status)
-        ) {
-          setErrorMessage('O servidor falhou em responder. Por favor, tente recarregar a página.');
+  
+        if (axios.isAxiosError(error)) {
+          const status = error.response?.status;
+          if (status && [500, 502, 503, 504, 507, 508, 509].includes(status)) {
+            setErrorMessage('O servidor falhou em responder. Por favor, tente recarregar a página.');
+          } else {
+            setErrorMessage('O servidor não conseguiu responder agora. Por favor, tente mais tarde.');
+          }
         } else {
-          setErrorMessage('O servidor não conseguiu responder agora. Por favor, tente mais tarde.');
+          setErrorMessage('Ocorreu um erro ao buscar os jogos. Por favor, tente novamente.');
         }
+  
         setLoading(false);
       }
     };
-
-    fetchGames();
-
+  
+    fetchData();
+  
     return () => {
       clearTimeout(timer);
     };
