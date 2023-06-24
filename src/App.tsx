@@ -122,7 +122,7 @@ const App: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className='flex justify-center items-center mt-4'>
+          <div className='justify-center items-center my-8 md:flex hidden'>
             <Pagination
               currentPage={currentPage}
               itemsPerPage={gamesPerPage}
