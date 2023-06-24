@@ -1,8 +1,9 @@
 {
-  "name": "gamelist",
+  "name": "full-games",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "author": "Luis Lucas<luisantoniolucass@gmail.com>",
   "scripts": {
     "dev": "vite && prettier --write '**/*.{js,jsx,ts,tsx}",
     "build": "tsc && vite build",
