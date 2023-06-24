@@ -95,7 +95,7 @@ const App: React.FC = () => {
           <div className='justify-center items-center grid grid-cols-1 md:grid-cols-2 gap-8'>
             <div className=''>
               <input
-                className='block w-full bg-slate-700 border border-gray-500 rounded-lg p-2 hover:border-2 text-gray-500 font-roboto'
+                className='block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto'
                 type='text'
                 placeholder='Pesquisar por título'
                 value={searchTerm}
@@ -104,7 +104,7 @@ const App: React.FC = () => {
             </div>
             <div>
               <select value={selectedGenre} onChange={handleGenreChange}
-                className='block w-full bg-slate-700 border border-gray-500 rounded-lg p-3 hover:border-2 text-gray-500 font-roboto'>
+                className='block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto'>
                 <option value=''>Todos os gêneros</option>
                 {genres.map((genre) => (
                   <option value={genre} key={genre}>
@@ -118,7 +118,7 @@ const App: React.FC = () => {
             {currentGames.map((game) => (
               <div key={game.id}>
                 <h2 className='font-semibold text-xl text-gray-500'>{game.title}</h2>
-                <img src={game.thumbnail} alt={game.title} className='w-62 rounded-lg' />
+                <img src={game.thumbnail} alt={game.title} className='w-62 rounded-lg hover:border-gray-500 shadow-lg hover:shadow-gray-500 border' />
               </div>
             ))}
           </div>
