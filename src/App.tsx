@@ -2,9 +2,7 @@ import Footer from "./components/Footer";
 import Games from "./components/Games";
 import Header from "./components/Header";
 
-
 const App: React.FC = () => {
-
 
   return (
     <>
@@ -14,7 +12,5 @@ const App: React.FC = () => {
     </>
   );
 };
-
-
 
 export default App;
