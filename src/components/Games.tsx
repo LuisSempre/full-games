@@ -14,6 +14,8 @@ const Games: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage] = useState(12);
   const [showFavorites, setShowFavorites] = useState(false);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -54,6 +56,10 @@ const Games: React.FC = () => {
       clearTimeout(timer);
     };
   }, []);
+
+  const toggleSortOrder = () => {
+    setSortOrder(prevOrder => (prevOrder === 'desc' ? 'asc' : 'desc'));
+  };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -97,12 +103,26 @@ const Games: React.FC = () => {
 
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
-  const filteredGames = games
-    .filter(game => game.title.toLowerCase().includes(searchTerm.toLowerCase()))
-    .filter(game => !selectedGenre || game.genre === selectedGenre)
-    .filter(game => !showFavorites || game.favorite);
+  const filteredGames = games.filter((game) => {
+    // Apply filters based on searchTerm and selectedGenre
+    const matchesSearchTerm = game.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesGenre = selectedGenre === '' || game.genre === selectedGenre;
+    
+    return matchesSearchTerm && matchesGenre;
+  });
+  
+  const sortedGames = [...filteredGames].sort((a, b) => {
+    if (a.rating > b.rating) return sortOrder === 'asc' ? 1 : -1;
+    if (a.rating < b.rating) return sortOrder === 'asc' ? -1 : 1;
 
-  const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
+    return 0;
+  });
+  
+  // ...
+  
+  const currentGames = sortedGames.slice(indexOfFirstGame, indexOfLastGame);
+
+  
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -154,6 +174,14 @@ const Games: React.FC = () => {
                   }`}
               >
                 Favoritos
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={toggleSortOrder}
+                className={`block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto`}
+              >
+                Ordenar por Avaliação {sortOrder === 'desc' ?  '▼' : '▲'}
               </button>
             </div>
           </div>
