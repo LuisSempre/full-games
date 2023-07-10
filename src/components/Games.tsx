@@ -13,6 +13,7 @@ const Games: React.FC = () => {
   const [selectedGenre, setSelectedGenre] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage] = useState(12);
+  const [showFavorites, setShowFavorites] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -62,13 +63,17 @@ const Games: React.FC = () => {
     setSelectedGenre(event.target.value);
   };
 
+  const handleShowFavorites = () => {
+    setShowFavorites(prevShowFavorites => !prevShowFavorites);
+  };
+
   const handleFavoriteToggle = (gameId: string) => {
     setGames((prevGames) =>
       prevGames.map((game) => {
         if (game.id === gameId) {
           return {
             ...game,
-            favorite: !game.favorite, // Inverte o valor do estado de favorito
+            favorite: !game.favorite,
           };
         }
         return game;
@@ -93,8 +98,10 @@ const Games: React.FC = () => {
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
   const filteredGames = games
-    .filter((game) => game.title.toLowerCase().includes(searchTerm.toLowerCase()))
-    .filter((game) => !selectedGenre || game.genre === selectedGenre);
+    .filter(game => game.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(game => !selectedGenre || game.genre === selectedGenre)
+    .filter(game => !showFavorites || game.favorite);
+
   const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
 
   const paginate = (pageNumber: number) => {
@@ -116,12 +123,12 @@ const Games: React.FC = () => {
       <div className='bg-gradient-to-bl from-slate-700 via-slate-800 to-slate-950'>
         <div className='max-w-7xl mx-auto w-full h-full space-y-8 p-8'>
           <div className='text-center text-red-500'>{errorMessage && <p>{errorMessage}</p>}</div>
-          <div className='justify-center items-center grid grid-cols-1 md:grid-cols-2 gap-8'>
+          <div className="justify-center items-center grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <input
-                className='block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto'
-                type='text'
-                placeholder='Pesquisar por título'
+                className="block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
+                type="text"
+                placeholder="Pesquisar por título"
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
@@ -130,17 +137,27 @@ const Games: React.FC = () => {
               <select
                 value={selectedGenre}
                 onChange={handleGenreChange}
-                className='block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto'
+                className="block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
               >
-                <option value=''>Todos os gêneros</option>
-                {genres.map((genre) => (
+                <option value="">Todos os gêneros</option>
+                {genres.map(genre => (
                   <option value={genre} key={genre}>
                     {genre}
                   </option>
                 ))}
               </select>
             </div>
+            <div>
+              <button
+                onClick={handleShowFavorites}
+                className={`block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto ${showFavorites ? 'bg-red-500' : ''
+                  }`}
+              >
+                Favoritos
+              </button>
+            </div>
           </div>
+
           <div className='grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-16 font-roboto'>
             {currentGames.map((game) => (
               <div key={game.id}>
