@@ -11,6 +11,7 @@ interface Game {
     developer: string;
     release_date: Date;
     freetogame_profile_url: string;
+    rating: number;
   }
   
   export { Game };

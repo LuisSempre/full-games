@@ -27,7 +27,7 @@ const Games: React.FC = () => {
         const games = await fetchGames('luisantoniolucass@gmail.com');
 
         clearTimeout(timer);
-        setGames(games);
+        setGames(games.map((game) => ({ ...game, rating: 0 })));
         setLoading(false);
       } catch (error) {
         clearTimeout(timer);
@@ -69,6 +69,20 @@ const Games: React.FC = () => {
           return {
             ...game,
             favorite: !game.favorite, // Inverte o valor do estado de favorito
+          };
+        }
+        return game;
+      })
+    );
+  };
+
+  const handleRatingChange = (gameId: string, rating: number) => {
+    setGames((prevGames) =>
+      prevGames.map((game) => {
+        if (game.id === gameId) {
+          return {
+            ...game,
+            rating,
           };
         }
         return game;
@@ -130,15 +144,23 @@ const Games: React.FC = () => {
           <div className='grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-16 font-roboto'>
             {currentGames.map((game) => (
               <div key={game.id}>
-                <div className='flex space-x-2'>
-                  <h2 className='font-semibold text-xl text-gray-500'>{game.title}</h2>
+                <h2 className="font-semibold text-xl text-gray-500 p-2">{game.title}</h2>
+                <div className="flex items-center space-x-2 p-2">
                   <button
-                    className={`text-xl text-gray-500 font-roboto ${game.favorite ? 'text-red-500 heartbeat' : ''}`}
+                    className={`text-xl text-gray-500 font-roboto ${game.favorite ? "text-red-500 heartbeat" : ""}`}
                     onClick={() => handleFavoriteToggle(game.id)}
                   >
-                    🤎
+                    ♡
                   </button>
-
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      className={`text-xl text-gray-500 font-roboto ${game.rating >= star ? "text-yellow-500" : ""}`}
+                      onClick={() => handleRatingChange(game.id, star)}
+                    >
+                      ★
+                    </button>
+                  ))}
                 </div>
                 <img
                   src={game.thumbnail}
