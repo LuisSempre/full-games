@@ -133,12 +133,12 @@ const Games: React.FC = () => {
                 <div className='flex space-x-2'>
                   <h2 className='font-semibold text-xl text-gray-500'>{game.title}</h2>
                   <button
-                    className={`text-xl text-gray-500 font-roboto ${game.favorite ? 'text-red-500' : ''
-                      }`}
+                    className={`text-xl text-gray-500 font-roboto ${game.favorite ? 'text-red-500 heartbeat' : ''}`}
                     onClick={() => handleFavoriteToggle(game.id)}
                   >
                     🤎
                   </button>
+
                 </div>
                 <img
                   src={game.thumbnail}
