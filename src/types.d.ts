@@ -1,4 +1,5 @@
 interface Game {
+    favorite: boolean;
     id: string;
     title: string;
     thumbnail: string;

@@ -16,22 +16,22 @@ const Games: React.FC = () => {
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    
+
     const fetchData = async () => {
       try {
         timer = setTimeout(() => {
           setErrorMessage('O servidor demorou para responder. Tente novamente mais tarde.');
           setLoading(false);
         }, 5000);
-  
+
         const games = await fetchGames('luisantoniolucass@gmail.com');
-  
+
         clearTimeout(timer);
         setGames(games);
         setLoading(false);
       } catch (error) {
         clearTimeout(timer);
-  
+
         if (axios.isAxiosError(error)) {
           const status = error.response?.status;
           if (status && [500, 502, 503, 504, 507, 508, 509].includes(status)) {
@@ -42,13 +42,13 @@ const Games: React.FC = () => {
         } else {
           setErrorMessage('Ocorreu um erro ao buscar os jogos. Por favor, tente novamente.');
         }
-  
+
         setLoading(false);
       }
     };
-  
+
     fetchData();
-  
+
     return () => {
       clearTimeout(timer);
     };
@@ -62,6 +62,19 @@ const Games: React.FC = () => {
     setSelectedGenre(event.target.value);
   };
 
+  const handleFavoriteToggle = (gameId: string) => {
+    setGames((prevGames) =>
+      prevGames.map((game) => {
+        if (game.id === gameId) {
+          return {
+            ...game,
+            favorite: !game.favorite, // Inverte o valor do estado de favorito
+          };
+        }
+        return game;
+      })
+    );
+  };
 
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
@@ -90,7 +103,7 @@ const Games: React.FC = () => {
         <div className='max-w-7xl mx-auto w-full h-full space-y-8 p-8'>
           <div className='text-center text-red-500'>{errorMessage && <p>{errorMessage}</p>}</div>
           <div className='justify-center items-center grid grid-cols-1 md:grid-cols-2 gap-8'>
-            <div className=''>
+            <div>
               <input
                 className='block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto'
                 type='text'
@@ -100,8 +113,11 @@ const Games: React.FC = () => {
               />
             </div>
             <div>
-              <select value={selectedGenre} onChange={handleGenreChange}
-                className='block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto'>
+              <select
+                value={selectedGenre}
+                onChange={handleGenreChange}
+                className='block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto'
+              >
                 <option value=''>Todos os gêneros</option>
                 {genres.map((genre) => (
                   <option value={genre} key={genre}>
@@ -111,11 +127,25 @@ const Games: React.FC = () => {
               </select>
             </div>
           </div>
-          <div className='grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-2 font-roboto'>
+          <div className='grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-16 font-roboto'>
             {currentGames.map((game) => (
               <div key={game.id}>
-                <h2 className='font-semibold text-xl text-gray-500'>{game.title}</h2>
-                <img src={game.thumbnail} alt={game.title} className='w-62 rounded-lg hover:border-gray-500 shadow-lg hover:shadow-gray-500 border' />
+                <div className='flex space-x-2'>
+                  <h2 className='font-semibold text-xl text-gray-500'>{game.title}</h2>
+                  <button
+                    className={`text-xl text-gray-500 font-roboto ${game.favorite ? 'text-red-500' : ''
+                      }`}
+                    onClick={() => handleFavoriteToggle(game.id)}
+                  >
+                    🤎
+                  </button>
+                </div>
+                <img
+                  src={game.thumbnail}
+                  alt={game.title}
+                  className='w-62 rounded-lg hover:border-gray-500 shadow-lg hover:shadow-gray-500 border'
+                />
+
               </div>
             ))}
           </div>
@@ -134,5 +164,3 @@ const Games: React.FC = () => {
 };
 
 export default Games;
-
-
