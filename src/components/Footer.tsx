@@ -1,7 +1,7 @@
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
     return (
-        <footer className="w-full bg-gray-950 p-8 font-roboto">
+        <footer className="w-full bg-black p-8 font-roboto">
             <div className="flex justify-center mt-8 space-x-6">
                 <a href="https://github.com/LuisSempre" className="text-gray-400 hover:text-gray-500">
                     <span className="sr-only">GitHub</span>

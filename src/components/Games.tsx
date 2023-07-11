@@ -16,7 +16,6 @@ const Games: React.FC = () => {
   const [showFavorites, setShowFavorites] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
@@ -104,25 +103,18 @@ const Games: React.FC = () => {
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
   const filteredGames = games.filter((game) => {
-    // Apply filters based on searchTerm and selectedGenre
     const matchesSearchTerm = game.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesGenre = selectedGenre === '' || game.genre === selectedGenre;
-    
     return matchesSearchTerm && matchesGenre;
   });
-  
+
   const sortedGames = [...filteredGames].sort((a, b) => {
     if (a.rating > b.rating) return sortOrder === 'asc' ? 1 : -1;
     if (a.rating < b.rating) return sortOrder === 'asc' ? -1 : 1;
-
     return 0;
   });
-  
-  // ...
-  
-  const currentGames = sortedGames.slice(indexOfFirstGame, indexOfLastGame);
 
-  
+  const currentGames = sortedGames.slice(indexOfFirstGame, indexOfLastGame);
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -140,10 +132,10 @@ const Games: React.FC = () => {
 
   return (
     <>
-      <div className='bg-gradient-to-bl from-slate-700 via-slate-800 to-slate-950'>
+      <div className='bg-black'>
         <div className='max-w-7xl mx-auto w-full h-full space-y-8 p-8'>
           <div className='text-center text-red-500'>{errorMessage && <p>{errorMessage}</p>}</div>
-          <div className="justify-center items-center grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="justify-center items-center grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <input
                 className="block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
@@ -170,7 +162,7 @@ const Games: React.FC = () => {
             <div>
               <button
                 onClick={handleShowFavorites}
-                className={`block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto ${showFavorites ? 'bg-red-500' : ''
+                className={`block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto ${showFavorites ? 'bg-red-500' : ''
                   }`}
               >
                 Favoritos
@@ -179,23 +171,26 @@ const Games: React.FC = () => {
             <div>
               <button
                 onClick={toggleSortOrder}
-                className={`block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto`}
+                className={`block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto`}
               >
-                Ordenar por Avaliação {sortOrder === 'desc' ?  '▼' : '▲'}
+                Ordenar por Avaliação {sortOrder === 'desc' ? '▼' : '▲'}
               </button>
             </div>
           </div>
 
           <div className='grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-16 font-roboto'>
             {currentGames.map((game) => (
-              <div key={game.id}>
+              <div key={game.id} className='mx-auto max-w-80 shadow-lg border p-2 rounded-md bg-gray-900 hover:border-gray-500 hover:shadow-gray-500'>
                 <h2 className="font-semibold text-xl text-gray-500 p-2">{game.title}</h2>
                 <div className="flex items-center space-x-2 p-2">
                   <button
                     className={`text-xl text-gray-500 font-roboto ${game.favorite ? "text-red-500 heartbeat" : ""}`}
                     onClick={() => handleFavoriteToggle(game.id)}
                   >
-                    ♡
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                      <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                    </svg>
+
                   </button>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -203,14 +198,16 @@ const Games: React.FC = () => {
                       className={`text-xl text-gray-500 font-roboto ${game.rating >= star ? "text-yellow-500" : ""}`}
                       onClick={() => handleRatingChange(game.id, star)}
                     >
-                      ★
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                        <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                      </svg>
                     </button>
                   ))}
                 </div>
                 <img
                   src={game.thumbnail}
                   alt={game.title}
-                  className='w-62 rounded-lg hover:border-gray-500 shadow-lg hover:shadow-gray-500 border'
+                  className='w-62 rounded-lg'
                 />
 
               </div>
