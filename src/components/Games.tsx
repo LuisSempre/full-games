@@ -187,7 +187,7 @@ const Games: React.FC = () => {
                 <h2 className="font-semibold text-xl text-gray-500 p-2">{game.title}</h2>
                 <div className="flex items-center space-x-2 p-2">
                   <button
-                    className={`text-xl text-gray-500 font-roboto ${game.favorite ? "text-red-500 heartbeat" : ""}`}
+                    className={`text-xl text-gray-500 font-roboto ${game.favorite ? "fill-red-500 heartbeat" : ""}`}
                     onClick={() => handleFavoriteToggle(game.id)}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-6 h-6">
@@ -198,7 +198,7 @@ const Games: React.FC = () => {
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
-                      className={`text-xl text-gray-500 font-roboto ${game.rating >= star ? "text-yellow-500" : ""}`}
+                      className={`text-xl text-gray-500 font-roboto ${game.rating >= star ? "fill-yellow-500" : ""}`}
                       onClick={() => handleRatingChange(game.id, star)}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-6 h-6">
