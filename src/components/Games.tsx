@@ -69,7 +69,7 @@ const Games: React.FC = () => {
   };
 
   const handleShowFavorites = () => {
-    setShowFavorites(prevShowFavorites => !prevShowFavorites);
+    setShowFavorites((prevShowFavorites) => !prevShowFavorites);
   };
 
   const handleFavoriteToggle = (gameId: string) => {
@@ -105,8 +105,13 @@ const Games: React.FC = () => {
   const filteredGames = games.filter((game) => {
     const matchesSearchTerm = game.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesGenre = selectedGenre === '' || game.genre === selectedGenre;
-    return matchesSearchTerm && matchesGenre;
+
+    // Include filter for favorited games
+    const matchesFavorites = !showFavorites || game.favorite;
+
+    return matchesSearchTerm && matchesGenre && matchesFavorites;
   });
+
 
   const sortedGames = [...filteredGames].sort((a, b) => {
     if (a.rating > b.rating) return sortOrder === 'asc' ? 1 : -1;
