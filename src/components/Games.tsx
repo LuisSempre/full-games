@@ -137,13 +137,13 @@ const Games: React.FC = () => {
 
   return (
     <>
-      <div className='bg-black'>
+      <div className=''>
         <div className='max-w-7xl mx-auto w-full h-full space-y-8 p-8'>
           <div className='text-center text-red-500'>{errorMessage && <p>{errorMessage}</p>}</div>
           <div className="justify-center items-center grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <input
-                className="block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
+                className="block w-full rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
                 type="text"
                 placeholder="Pesquisar por título"
                 value={searchTerm}
@@ -154,7 +154,7 @@ const Games: React.FC = () => {
               <select
                 value={selectedGenre}
                 onChange={handleGenreChange}
-                className="block w-full bg-slate-700 rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
+                className="block w-full rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
               >
                 <option value="">Todos os gêneros</option>
                 {genres.map(genre => (
@@ -167,7 +167,7 @@ const Games: React.FC = () => {
             <div>
               <button
                 onClick={handleShowFavorites}
-                className={`block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto ${showFavorites ? 'bg-red-500' : ''
+                className={`block w-full rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto ${showFavorites ? 'bg-red-500' : ''
                   }`}
               >
                 Favoritos
@@ -176,7 +176,7 @@ const Games: React.FC = () => {
             <div>
               <button
                 onClick={toggleSortOrder}
-                className={`block w-full bg-slate-700 rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto`}
+                className={`block w-full rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto`}
               >
                 Ordenar por Avaliação {sortOrder === 'desc' ? '▼' : '▲'}
               </button>
@@ -185,7 +185,7 @@ const Games: React.FC = () => {
 
           <div className='grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-16 font-roboto'>
             {currentGames.map((game) => (
-              <div key={game.id} className='mx-auto max-w-80 shadow-lg border p-2 rounded-md bg-gray-900 hover:border-gray-500 hover:shadow-gray-500'>
+              <div key={game.id} className='mx-auto max-w-80 shadow-lg border p-2 rounded-md hover:border-gray-500 hover:shadow-gray-500'>
                 <h2 className="font-semibold text-xl text-gray-500 p-2">{game.title}</h2>
                 <div className="flex items-center space-x-2 p-2">
                   <button
