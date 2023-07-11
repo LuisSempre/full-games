@@ -167,7 +167,7 @@ const Games: React.FC = () => {
             <div>
               <button
                 onClick={handleShowFavorites}
-                className={`block w-full rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto ${showFavorites ? 'bg-red-500' : ''
+                className={`block w-full rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto ${showFavorites ? '' : ''
                   }`}
               >
                 Favoritos
