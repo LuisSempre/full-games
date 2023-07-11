@@ -102,13 +102,11 @@ const Games: React.FC = () => {
 
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  
   const filteredGames = games.filter((game) => {
     const matchesSearchTerm = game.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesGenre = selectedGenre === '' || game.genre === selectedGenre;
-
-    // Include filter for favorited games
     const matchesFavorites = !showFavorites || game.favorite;
-
     return matchesSearchTerm && matchesGenre && matchesFavorites;
   });
 
