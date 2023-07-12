@@ -141,6 +141,22 @@ const Games: React.FC = () => {
   const [gamesPerPage] = useState(12);
   const [showFavorites, setShowFavorites] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [authUser, setAuthUser] = useState<CustomUser | null>(null);
+
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setAuthUser({ ...user, user: "" });
+      } else {
+        setAuthUser(null);
+      }
+    });
+
+    return () => {
+      listen();
+    };
+  }, []);
+
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -199,33 +215,44 @@ const Games: React.FC = () => {
   };
 
   const handleFavoriteToggle = (gameId: string) => {
-    setGames((prevGames) =>
-      prevGames.map((game) => {
-        if (game.id === gameId) {
-          return {
-            ...game,
-            favorite: !game.favorite,
-          };
-        }
-        return game;
-      })
-    );
+    if (authUser) {
+      // User is authenticated, perform the toggle
+      setGames((prevGames) =>
+        prevGames.map((game) => {
+          if (game.id === gameId) {
+            return {
+              ...game,
+              favorite: !game.favorite,
+            };
+          }
+          return game;
+        })
+      );
+    } else {
+      // User is not authenticated, prompt them to sign in
+      alert('Please sign in to toggle favorites.');
+    }
   };
 
   const handleRatingChange = (gameId: string, rating: number) => {
-    setGames((prevGames) =>
-      prevGames.map((game) => {
-        if (game.id === gameId) {
-          return {
-            ...game,
-            rating,
-          };
-        }
-        return game;
-      })
-    );
+    if (authUser) {
+      // User is authenticated, set the rating
+      setGames((prevGames) =>
+        prevGames.map((game) => {
+          if (game.id === gameId) {
+            return {
+              ...game,
+              rating,
+            };
+          }
+          return game;
+        })
+      );
+    } else {
+      // User is not authenticated, prompt them to sign in
+      alert('Please sign in to set ratings.');
+    }
   };
-
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
   
