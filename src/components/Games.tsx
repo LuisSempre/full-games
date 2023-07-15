@@ -2,143 +2,16 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { fetchGames } from "../api";
+import { fetchGames } from "@/api";
 import Loader from "./Loader";
 import Pagination from "./Pagination.";
-import { Game } from "../types";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { onAuthStateChanged, signOut, User } from "firebase/auth";
-import { auth } from "../firebase";
+import { Game } from "@/types";
+import { User, onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase/auth";
 
 interface CustomUser extends User {
   user: string;
 }
-
-const AuthDetails: React.FC = () => {
-  const [authUser, setAuthUser] = useState<CustomUser | null>(null);
-
-  useEffect(() => {
-    const listen = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setAuthUser({ ...user, user: "" }); // Replace "" with the appropriate value for the `user` property
-      } else {
-        setAuthUser(null);
-      }
-    });
-
-    return () => {
-      listen();
-    };
-  }, []);
-
-  const userSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("sign out successful");
-        window.location.reload();
-      })
-      .catch((error) => console.log(error));
-  };
-
-  return (
-    <div className="max-w-24 mx-auto">
-      <SignIn />
-      <SignUp />
-      <div className="flex justify-center items-center my-4 flex-col space-y-4">
-        {authUser ? (
-          <>
-            <button className="rounded-md text-white bg-indigo-500 px-4 py-2">{`Signed In as ${authUser.email}`}</button>
-            <button
-              className="rounded-md text-white bg-indigo-500 px-4 py-2"
-              onClick={userSignOut}
-            >
-              Sign Out
-            </button>
-          </>
-        ) : (
-          <button className="rounded-md text-white bg-indigo-500 px-4 py-2">
-            Signed Out
-          </button>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const SignUp: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const signUp = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  return (
-    <div className="flex justify-center items-center my-4 flex-col">
-      <form onSubmit={signUp}>
-        <h1>Create Account</h1>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-        <input
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  );
-};
-
-const SignIn: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const signIn = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(userCredential);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  return (
-    <div className="flex justify-center items-center my-4 flex-col">
-      <form onSubmit={signIn}>
-        <h1>Log In to your Account</h1>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-        <input
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-        <button type="submit">Log In</button>
-      </form>
-    </div>
-  );
-};
 
 const Games: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -246,7 +119,7 @@ const Games: React.FC = () => {
       );
     } else {
       // User is not authenticated, prompt them to sign in
-      alert("Please sign in to toggle favorites.");
+      alert("Faça login para alternar entre os favoritos.");
     }
   };
 
@@ -266,7 +139,7 @@ const Games: React.FC = () => {
       );
     } else {
       // User is not authenticated, prompt them to sign in
-      alert("Please sign in to set ratings.");
+      alert("Faça login para definir classificações.");
     }
   };
   const indexOfLastGame = currentPage * gamesPerPage;
@@ -306,7 +179,6 @@ const Games: React.FC = () => {
   return (
     <div>
       <div className="max-w-7xl mx-auto w-full h-full space-y-8 p-8">
-        <AuthDetails />
         <div className="text-center text-red-500">
           {errorMessage && <p>{errorMessage}</p>}
         </div>

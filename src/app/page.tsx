@@ -1,13 +1,16 @@
-import Footer from '@/components/Footer'
-import Games from '@/components/Games'
-import Header from '@/components/Header'
+import Navigation from "@/components/Navigation";
+import Games from "@/components/Games";
+import Footer from "@/components/Footer";
 
 export default function Home() {
+  
   return (
-    <>
-      <Header />
-      <Games />
+    <div>
+      <Navigation />
+      <div className="px-8">
+        <Games />
+      </div>
       <Footer />
-    </>
-  )
+    </div>
+  );
 }

@@ -5,10 +5,6 @@
 <img alt="sponsors" src="./public/Screenshot_2.png">
 
 
-## Personalize a configuração
-
-Consulte [Referência de configuração do Vite](https://vitejs.dev/config/).
-
 ## Configuração do Projeto
 
 ```sh
