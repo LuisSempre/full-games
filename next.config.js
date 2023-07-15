@@ -1,9 +1,4 @@
- /** @type {import('next').NextConfig} */
-const nextConfig = {
-   distDir: 'dist',
-   images: {
-      domains: ['www.freetogame.com'],
-    },
-}
+/** @type {import('next').NextConfig} */
+const nextConfig = {}
 
 module.exports = nextConfig
