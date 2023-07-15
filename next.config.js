@@ -1,8 +1,5 @@
 module.exports = {
-   output: {
-      path: path.resolve(__dirname, 'dist'),
-      // Other output options...
-    },
+   outDir: 'dist',
    images: {
       domains: ['www.freetogame.com'],
     },
