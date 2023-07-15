@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { fetchGames } from "@/api";
@@ -268,7 +268,9 @@ const Games: React.FC = () => {
                   </button>
                 ))}
               </div>
-              <img
+              <Image
+                width={500}
+                height={500}
                 src={game.thumbnail}
                 alt={game.title}
                 className="w-62 rounded-lg"
