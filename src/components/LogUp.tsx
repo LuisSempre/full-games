@@ -29,11 +29,11 @@ function LogUp() {
   }, [router]);
 
   return (
-    <div>
-      <h1 className="text-xl">Criar conta:</h1>
+    <div className="text-indigo-800">
+      <h1 className="text-xl font-bold">Criar conta:</h1>
       <div>
         <div>
-          <label htmlFor="email" className="font-semibold">
+          <label htmlFor="email" className="">
             Email
           </label>
           <input
@@ -42,11 +42,11 @@ function LogUp() {
             id=""
             value={formData["email"]}
             onChange={onFormDataChange}
-            className="border border-black block"
+            className="border border-indigo-700 block rounded-md"
           />
         </div>
         <div>
-          <label htmlFor="password" className="font-semibold">
+          <label htmlFor="password" className="">
             Senha
           </label>
           <input
@@ -55,11 +55,11 @@ function LogUp() {
             id=""
             value={formData["password"]}
             onChange={onFormDataChange}
-            className="border border-black block"
+            className="border border-indigo-700 block rounded-md"
           />
         </div>
         <div>
-          <label htmlFor="confirmPassword" className="font-semibold">
+          <label htmlFor="confirmPassword" className="">
             Confirmar senha
           </label>
           <input
@@ -68,10 +68,13 @@ function LogUp() {
             id=""
             value={formData["confirmPassword"]}
             onChange={onFormDataChange}
-            className="border border-black block"
+            className="border border-indigo-700 block rounded-md"
           />
         </div>
-        <button type="button" onClick={onFormDataSubmit}  className="bg-black text-white my-4 px-2 rounded-md uppercase">
+        <button 
+          type="button" 
+          onClick={onFormDataSubmit}  
+          className="bg-indigo-700 text-white my-4 px-8 rounded-md uppercase">
           criar
         </button>
       </div>
