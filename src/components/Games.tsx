@@ -1,5 +1,5 @@
-'use client'
-import Image from 'next/image'
+"use client";
+import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { fetchGames } from "@/api";
@@ -185,7 +185,7 @@ const Games: React.FC = () => {
         <div className="justify-center items-center grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <input
-              className="block w-full rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
+              className="block w-full rounded-lg p-2 hover:border-indigo-500 shadow-lg hover:shadow-gray-500 border text-indigo-500 font-roboto"
               type="text"
               placeholder="Pesquisar por título"
               value={searchTerm}
@@ -196,7 +196,7 @@ const Games: React.FC = () => {
             <select
               value={selectedGenre}
               onChange={handleGenreChange}
-              className="block w-full rounded-lg p-3 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto"
+              className="block w-full rounded-lg p-3 hover:border-indigo-500 shadow-lg hover:shadow-gray-500 border text-indigo-500 font-roboto"
             >
               <option value="">Todos os gêneros</option>
               {genres.map((genre) => (
@@ -209,7 +209,7 @@ const Games: React.FC = () => {
           <div>
             <button
               onClick={handleShowFavorites}
-              className={`block w-full rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto ${
+              className={`block w-full rounded-lg p-2 hover:border-indigo-500 shadow-lg hover:shadow-gray-500 border text-indigo-500 font-roboto ${
                 showFavorites ? "" : ""
               }`}
             >
@@ -219,7 +219,7 @@ const Games: React.FC = () => {
           <div>
             <button
               onClick={toggleSortOrder}
-              className={`block w-full rounded-lg p-2 hover:border-gray-500 shadow-lg hover:shadow-gray-500 border text-gray-500 font-roboto`}
+              className={`block w-full rounded-lg p-2 hover:border-indigo-500 shadow-lg hover:shadow-gray-500 border text-indigo-500 font-roboto`}
             >
               Ordenar por Avaliação {sortOrder === "desc" ? "▼" : "▲"}
             </button>
@@ -228,54 +228,60 @@ const Games: React.FC = () => {
 
         <div className="grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-16 font-roboto">
           {currentGames.map((game) => (
-            <div
-              key={game.id}
-              className="mx-auto max-w-80 shadow-lg border p-2 rounded-md hover:border-gray-500 hover:shadow-gray-500"
-            >
-              <h2 className="font-semibold text-base text-gray-500 p-2">
-                {game.title}
-              </h2>
-              <div className="flex items-center space-x-2 p-2">
-                <button
-                  className={`text-xl text-gray-500 font-roboto ${
-                    game.favorite ? "fill-red-500 heartbeat" : ""
-                  }`}
-                  onClick={() => handleFavoriteToggle(game.id)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    className="w-6 h-6"
-                  >
-                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                  </svg>
-                </button>
-                {[1, 2, 3, 4].map((star) => (
-                  <button
-                    key={star}
-                    className={`text-xl text-gray-500 font-roboto ${
-                      game.rating >= star ? "fill-yellow-500" : ""
-                    }`}
-                    onClick={() => handleRatingChange(game.id, star)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      className="w-6 h-6"
-                    >
-                      <path d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" />
-                    </svg>
-                  </button>
-                ))}
+            <div className="relative z-10 -mx-4 shadow-lg ring-1 ring-indigo-500/10 rounded-3xl w-full">
+              <div className="absolute -top-px left-1/2 -ml-24 flex h-[2px] w-48">
+                <div className="w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
+                <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
+                <div className="-ml-[100%] w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
+                <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
               </div>
-              <Image
-                width={500}
-                height={500}
-                src={game.thumbnail}
-                alt={game.title}
-                className="w-62 rounded-lg"
-              />
-            </div>
+              <div className="relative bg-white px-4 py-10 sm:rounded-3xl sm:px-10 "  key={game.id}>
+    
+                  <h2 className="font-semibold text-base text-indigo-500 p-2">
+                    {game.title}
+                  </h2>
+                  <div className="flex items-center space-x-2 p-2">
+                    <button
+                      className={`text-xl text-indigo-500 font-roboto ${
+                        game.favorite ? "fill-red-500 heartbeat" : ""
+                      }`}
+                      onClick={() => handleFavoriteToggle(game.id)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        className="w-6 h-6"
+                      >
+                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                      </svg>
+                    </button>
+                    {[1, 2, 3, 4].map((star) => (
+                      <button
+                        key={star}
+                        className={`text-xl text-indigo-500 font-roboto ${
+                          game.rating >= star ? "fill-yellow-500" : ""
+                        }`}
+                        onClick={() => handleRatingChange(game.id, star)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          className="w-6 h-6"
+                        >
+                          <path d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" />
+                        </svg>
+                      </button>
+                    ))}
+                  </div>
+                  <Image
+                    width={800}
+                    height={500}
+                    src={game.thumbnail}
+                    alt={game.title}
+                    className="w-62 rounded-lg"
+                  />
+                </div>
+              </div>
           ))}
         </div>
         <div className="justify-center items-center my-8 md:flex hidden">
