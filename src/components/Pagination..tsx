@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 interface PaginationProps {
   currentPage: number;
   totalItems: number;
@@ -5,7 +7,7 @@ interface PaginationProps {
   paginate: (pageNumber: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination: FC<PaginationProps> = ({
   currentPage,
   totalItems,
   itemsPerPage,
@@ -25,7 +27,9 @@ const Pagination: React.FC<PaginationProps> = ({
           <li
             key={number}
             className={`${
-              number === currentPage ? 'font-semibold text-indigo-600 underline' : 'text-indigo-500'
+              number === currentPage
+                ? "font-semibold text-indigo-600 underline"
+                : "text-indigo-500"
             } cursor-pointer`}
             onClick={() => paginate(number)}
           >

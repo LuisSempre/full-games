@@ -1,17 +1,14 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import {
-  signInUserWithEmailAndPassword,
-  getCurrentUser,
-} from "@/firebase/auth";
+import { FC, useEffect, useState } from "react";
+import { signInWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
 
-function LogIn() {
+const LogIn: FC = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({ email: "", password: "" });
 
-  const onFormDataChange = (e: { target: { name: any; value: any; }; }) => {
+  const onFormDataChange = (e: { target: { name: any; value: any } }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -41,13 +38,26 @@ function LogIn() {
 
   const onFormDataSubmit = async () => {
     if (validateForm()) {
-      await signInUserWithEmailAndPassword(formData.email, formData.password);
-      router.push("/");
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, formData.email, formData.password)
+        .then(() => {
+          // Autenticação bem-sucedida, a senha está correta
+          router.push("/");
+        })
+        .catch((error) => {
+          // Trate os erros de autenticação aqui
+          if (error.code === "auth/wrong-password") {
+            setErrors({ ...errors, password: "Senha incorreta" });
+          } else {
+            console.log(error);
+          }
+        });
     }
   };
 
   useEffect(() => {
-    getCurrentUser().then((user) => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         router.replace("/");
       }
@@ -84,7 +94,9 @@ function LogIn() {
             onChange={onFormDataChange}
             className="border border-indigo-700 block rounded-md"
           />
-          {errors.password && <span className="text-red-500">{errors.password}</span>}
+          {errors.password && (
+            <span className="text-red-500">{errors.password}</span>
+          )}
         </div>
         <button
           type="button"
@@ -96,6 +108,6 @@ function LogIn() {
       </div>
     </div>
   );
-}
+};
 
 export default LogIn;

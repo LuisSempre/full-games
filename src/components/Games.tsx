@@ -193,11 +193,11 @@ const Games: FC = () => {
             <select
               value={selectedGenre}
               onChange={handleGenreChange}
-              className="block w-full rounded-lg p-3 hover:border-indigo-500 shadow-lg hover:shadow-gray-500 border text-indigo-500 font-roboto"
+              className="bg-white block w-full rounded-lg p-3 hover:border-indigo-500 shadow-lg hover:shadow-gray-500 border text-indigo-500 font-roboto"
             >
-              <option value="">Todos os gêneros</option>
+              <option value="" >Todos os gêneros</option>
               {genres.map((genre) => (
-                <option value={genre} key={genre}>
+                <option value={genre} key={genre} >
                   {genre}
                 </option>
               ))}
@@ -225,7 +225,7 @@ const Games: FC = () => {
 
         <div className="grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-16 font-roboto">
           {currentGames.map((game) => (
-            <div className="relative z-10 -mx-4 shadow-lg ring-1 ring-indigo-500/10 rounded-3xl w-full hover:border-indigo-100 hover:border">
+            <div className="relative z-10 shadow-lg ring-1 ring-indigo-500/10 rounded-3xl w-full hover:border-indigo-100 hover:border">
               <div className="absolute -top-px left-1/2 -ml-24 flex h-[2px] w-48">
                 <div className="w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
                 <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>

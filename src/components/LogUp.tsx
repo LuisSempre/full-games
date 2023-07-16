@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import {
   signUpUserWithEmailAndPassword,
   getCurrentUser,
 } from "@/firebase/auth";
 
-function LogUp() {
+const LogUp: FC = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",

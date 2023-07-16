@@ -3,18 +3,19 @@ import Container from "./Container";
 
 const Action: FC = () => {
   return (
-    <Container className="flex flex-col items-center justify-center">
-      <div className="relative z-10 -mx-4 shadow-lg ring-1 ring-indigo-500/10  rounded-3xl w-full text-center my-16 max-w-2xl py-8">
-        <div className="absolute -top-px left-1/2 -ml-48 flex h-[2px] w-96">
-          <div className="w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-          <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-          <div className="-ml-[100%] w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-          <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
-        </div>
-        <div className="relative bg-white px-4 py-10 sm:rounded-3xl sm:px-10">
+    <Container className="flex-col items-center justify-center hidden sm:flex">
+          <div 
+      className="relative flex 
+      place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 
+      before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl 
+      before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 
+      after:bg-gradient-conic after:from-indigo-100 after:via-indigo-200 after:blur-2xl after:content-[''] 
+      before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-indigo-700 before:dark:opacity-10 
+      after:dark:from-indigo-900 after:dark:via-indigo-700 after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
+        <div className="max-w-2xl mx-auto py-16 space-y-4">
           <div className="mx-auto max-w-lg text-center">
-            <h2 className="font-display text-3xl tracking-tight text-indigo-500 sm:text-4xl">
-              Crie uma conta hoje
+            <h2 className="font-bold text-6xl tracking-tight text-indigo-500">
+              Crie sua conta hoje!
             </h2>
             <p className="mt-4 text-lg tracking-tight text-indigo-500">
               Para aproveitar todos os recursos da lista de games e não perder
