@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getCurrentUser, signOutUser } from "@/firebase/auth";
+import Container from "./Container";
 
 function Navigation() {
   const [user, setUser] = useState(null);
@@ -13,23 +14,25 @@ function Navigation() {
       console.log(user);
     });
   }, []);
-  
+
   if (user) {
     return (
-      <div className="px-8 flex border justify-between border-black py-2 items-center">
-        <h1 className="font-semibold te">Lista de games</h1>
-        <div className="flex">
-          <button
-            className="border rounded-md mx-2 py-1 cursor-pointer  border-black px-4"
-            onClick={async () => {
-              await signOutUser();
-              window.location.reload();
-            }}
-          >
-            Sign Out
-          </button>
+      <Container className="flex flex-col items-center justify-between">
+        <div className="px-8 flex justify-between py-2 items-center">
+          <h1 className="font-semibold te">Lista de games</h1>
+          <div className="flex">
+            <button
+              className="border rounded-md mx-2 py-1 cursor-pointer  border-black px-4"
+              onClick={async () => {
+                await signOutUser();
+                window.location.reload();
+              }}
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
-      </div>
+      </Container>
     );
   }
 
@@ -37,7 +40,10 @@ function Navigation() {
     <div className="px-8 flex border justify-between border-black py-2 items-center">
       <h1 className="font-semibold te">Lista de games</h1>
       <div className="flex">
-        <Link className="border rounded-md mx-2 py-1 cursor-pointer  border-black px-4" href="/auth">
+        <Link
+          className="border rounded-md mx-2 py-1 cursor-pointer  border-black px-4"
+          href="/auth"
+        >
           Logar
         </Link>
       </div>
