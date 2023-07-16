@@ -232,7 +232,7 @@ const Games: React.FC = () => {
               key={game.id}
               className="mx-auto max-w-80 shadow-lg border p-2 rounded-md hover:border-gray-500 hover:shadow-gray-500"
             >
-              <h2 className="font-semibold text-xl text-gray-500 p-2">
+              <h2 className="font-semibold text-base text-gray-500 p-2">
                 {game.title}
               </h2>
               <div className="flex items-center space-x-2 p-2">
