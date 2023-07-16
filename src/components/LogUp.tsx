@@ -1,20 +1,67 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState,useEffect } from "react";
-import { signUpUserWithEmailAndPassword,getCurrentUser } from "@/firebase/auth";
+import { useState, useEffect } from "react";
+import {
+  signUpUserWithEmailAndPassword,
+  getCurrentUser,
+} from "@/firebase/auth";
 
 function LogUp() {
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "", confirmPassword: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const onFormDataChange = (e: any) => {
+  const onFormDataChange = (e: { target: { name: any; value: any } }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
+
+    if (!formData.email) {
+      newErrors.email = "E-mail é obrigatório";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Formato de email inválido";
+      valid = false;
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Senha requerida";
+      valid = false;
+    } else if (formData.password.length < 8) {
+      newErrors.password = "A senha deve ter no mínimo 8 caracteres";
+      valid = false;
+    }
+
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = "É necessário confirmar a senha";
+      valid = false;
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "As senhas não coincidem";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const onFormDataSubmit = async () => {
-    if (formData.password !== formData.confirmPassword) {
-    } else {
+    if (validateForm()) {
       await signUpUserWithEmailAndPassword(formData.email, formData.password);
       router.push("/");
     }
@@ -44,6 +91,7 @@ function LogUp() {
             onChange={onFormDataChange}
             className="border border-indigo-700 block rounded-md"
           />
+          {errors.email && <span className="text-red-500">{errors.email}</span>}
         </div>
         <div>
           <label htmlFor="password" className="">
@@ -57,6 +105,9 @@ function LogUp() {
             onChange={onFormDataChange}
             className="border border-indigo-700 block rounded-md"
           />
+          {errors.password && (
+            <span className="text-red-500">{errors.password}</span>
+          )}
         </div>
         <div>
           <label htmlFor="confirmPassword" className="">
@@ -70,11 +121,15 @@ function LogUp() {
             onChange={onFormDataChange}
             className="border border-indigo-700 block rounded-md"
           />
+          {errors.confirmPassword && (
+            <span className="text-red-500">{errors.confirmPassword}</span>
+          )}
         </div>
-        <button 
-          type="button" 
-          onClick={onFormDataSubmit}  
-          className="bg-indigo-700 text-white my-4 px-8 rounded-md uppercase">
+        <button
+          type="button"
+          onClick={onFormDataSubmit}
+          className="bg-indigo-700 text-white my-4 px-8 rounded-md uppercase"
+        >
           criar
         </button>
       </div>

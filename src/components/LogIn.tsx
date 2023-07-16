@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -10,14 +9,41 @@ import {
 function LogIn() {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "" });
 
-  const onFormDataChange = (e: any) => {
+  const onFormDataChange = (e: { target: { name: any; value: any; }; }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { email: "", password: "" };
+
+    if (!formData.email) {
+      newErrors.email = "E-mail é obrigatório";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Formato de email inválido";
+      valid = false;
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Senha requerida";
+      valid = false;
+    } else if (formData.password.length < 8) {
+      newErrors.password = "A senha deve ter no mínimo 8 caracteres";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const onFormDataSubmit = async () => {
-    await signInUserWithEmailAndPassword(formData.email, formData.password);
-    router.push("/");
+    if (validateForm()) {
+      await signInUserWithEmailAndPassword(formData.email, formData.password);
+      router.push("/");
+    }
   };
 
   useEffect(() => {
@@ -44,6 +70,7 @@ function LogIn() {
             onChange={onFormDataChange}
             className="border border-indigo-700 block rounded-md"
           />
+          {errors.email && <span className="text-red-500">{errors.email}</span>}
         </div>
         <div>
           <label htmlFor="password" className="">
@@ -57,6 +84,7 @@ function LogIn() {
             onChange={onFormDataChange}
             className="border border-indigo-700 block rounded-md"
           />
+          {errors.password && <span className="text-red-500">{errors.password}</span>}
         </div>
         <button
           type="button"

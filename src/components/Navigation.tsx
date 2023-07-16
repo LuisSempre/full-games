@@ -27,10 +27,10 @@ function Navigation() {
           </div>
           <div className="relative bg-white px-4 py-10 sm:rounded-3xl sm:px-10">
             <div className="px-8 flex justify-between py-2 items-center">
-              <h1 className="font-semibold text-indigo-700 text-xl">Lista de games</h1>
+            <h1 className="text-2xl bg-gradient-to-br bg-clip-text text-transparent from-blue-600 via-indigo-300 to-pink-400">Lista de games</h1>
               <div className="flex">
                 <button
-                  className="border rounded-md mx-2 py-1 cursor-pointer  border-black px-4"
+                 className="inline-flex gap-0.5 justify-center overflow-hidden text-xl font-medium transition rounded-full bg-zinc-900 py-1 px-3 text-white hover:bg-zinc-700 dark:bg-indigo-400/10 dark:text-indigo-400 dark:ring-1 dark:ring-inset dark:ring-indigo-400/20 dark:hover:bg-indigo-400/10 dark:hover:text-indigo-300 dark:hover:ring-indigo-300"
                   onClick={async () => {
                     await signOutUser();
                     window.location.reload();

@@ -1,4 +1,5 @@
 "use client";
+import { FC } from 'react';
 import Image from "next/image";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -13,7 +14,7 @@ interface CustomUser extends User {
   user: string;
 }
 
-const Games: React.FC = () => {
+const Games: FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [games, setGames] = useState<Game[]>([]);
@@ -105,7 +106,6 @@ const Games: React.FC = () => {
 
   const handleFavoriteToggle = (gameId: string) => {
     if (authUser) {
-      // User is authenticated, perform the toggle
       setGames((prevGames) =>
         prevGames.map((game) => {
           if (game.id === gameId) {
@@ -118,14 +118,12 @@ const Games: React.FC = () => {
         })
       );
     } else {
-      // User is not authenticated, prompt them to sign in
       alert("Faça login para alternar entre os favoritos.");
     }
   };
 
   const handleRatingChange = (gameId: string, rating: number) => {
     if (authUser) {
-      // User is authenticated, set the rating
       setGames((prevGames) =>
         prevGames.map((game) => {
           if (game.id === gameId) {
@@ -138,7 +136,6 @@ const Games: React.FC = () => {
         })
       );
     } else {
-      // User is not authenticated, prompt them to sign in
       alert("Faça login para definir classificações.");
     }
   };
@@ -228,7 +225,7 @@ const Games: React.FC = () => {
 
         <div className="grid lg:grid-cols-2 grid-cols-1 xl:grid-cols-3 gap-16 font-roboto">
           {currentGames.map((game) => (
-            <div className="relative z-10 -mx-4 shadow-lg ring-1 ring-indigo-500/10 rounded-3xl w-full">
+            <div className="relative z-10 -mx-4 shadow-lg ring-1 ring-indigo-500/10 rounded-3xl w-full hover:border-indigo-100 hover:border">
               <div className="absolute -top-px left-1/2 -ml-24 flex h-[2px] w-48">
                 <div className="w-full flex-none blur-sm [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
                 <div className="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]"></div>
