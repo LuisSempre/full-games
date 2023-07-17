@@ -27,7 +27,7 @@ const Navigation: FC = () => {
           </div>
           <div className="relative bg-white px-4 py-10 sm:rounded-3xl sm:px-10">
             <div className="px-8 flex justify-between py-2 items-center">
-              <h1 className="text-2xl bg-gradient-to-br bg-clip-text text-transparent from-blue-600 via-indigo-300 to-pink-400">
+              <h1 className="font-bold text-2xl bg-gradient-to-br bg-clip-text text-transparent from-blue-600 via-indigo-300 to-pink-400">
                 Lista de games
               </h1>
               <div className="flex">
@@ -59,7 +59,7 @@ const Navigation: FC = () => {
         </div>
         <div className="relative bg-white px-4 py-10 sm:rounded-3xl sm:px-10">
           <div className="px-8 flex justify-between py-2 items-center">
-            <h1 className="text-2xl bg-gradient-to-br bg-clip-text text-transparent from-blue-600 via-indigo-300 to-pink-400">
+            <h1 className="font-bold text-2xl bg-gradient-to-br bg-clip-text text-transparent from-blue-600 via-indigo-300 to-pink-400">
               Lista de games
             </h1>
             <div className="flex">

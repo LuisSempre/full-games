@@ -1,8 +1,8 @@
 # Lista de jogos
 
-<img alt="sponsors" src="./public/Screenshot_1.png">
+<img alt="sponsors" src="./public/Desktop.png">
 
-<img alt="sponsors" src="./public/Screenshot_2.png">
+<img alt="sponsors" src="./public/Mobile.png">
 
 
 ## Configuração do Projeto
