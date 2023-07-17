@@ -207,7 +207,7 @@ const Games: FC = () => {
             <button
               onClick={handleShowFavorites}
               className={`block w-full rounded-lg p-2 hover:border-indigo-500 shadow-lg hover:shadow-gray-500 border text-indigo-500 font-roboto ${
-                showFavorites ? "" : ""
+                showFavorites ? "bg-indigo-100" : ""
               }`}
             >
               Favoritos
